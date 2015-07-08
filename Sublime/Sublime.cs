@@ -53,15 +53,15 @@ partial class Sublime : Script
             UI.Notify("Initialized default settings.");
         }
 
-        if (e.KeyCode == Keys.J)
-        {
-            float x = Game.Player.Character.Position.X;
-            float y = Game.Player.Character.Position.Y;
-            float z = Game.Player.Character.Position.Z;
-            string GetZoneName = Function.Call<string>(Hash.GET_NAME_OF_ZONE, x, y, z);
-            Logger.Log(string.Format("Zone: {0}\t{1}", GetZoneName, Game.Player.Character.Position.ToString()));
-            UI.Notify("Log Updated");
-        }
+        //if (e.KeyCode == Keys.J)
+        //{
+        //    float x = Game.Player.Character.Position.X;
+        //    float y = Game.Player.Character.Position.Y;
+        //    float z = Game.Player.Character.Position.Z;
+        //    string GetZoneName = Function.Call<string>(Hash.GET_NAME_OF_ZONE, x, y, z);
+        //    Logger.Log(string.Format("Zone: {0}\t{1}", GetZoneName, Game.Player.Character.Position.ToString()));
+        //    UI.Notify("Log Updated");
+        //}
     }
 
     private void DrawMenu(GTA.Menu name)

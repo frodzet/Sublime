@@ -47,6 +47,34 @@ partial class Sublime
         toggleInvincible.Changed += (sender, args) => PlayerFunctions.ToggleInvincibility();
         playerMenuItems.Add(toggleInvincible);
 
+        var toggleSuperJump = new MenuToggle("Super Jump", "", PlayerFunctions.CanPlayerSuperJump);
+        toggleSuperJump.Changed += (sender, args) => PlayerFunctions.ToggleSuperJump();
+        playerMenuItems.Add(toggleSuperJump);
+
+        var toggleFastRun = new MenuToggle("Fast Run", "", PlayerFunctions.CanPlayerFastRun);
+        toggleFastRun.Changed += (sender, args) => PlayerFunctions.ToggleFastRun();
+        playerMenuItems.Add(toggleFastRun);
+
+        var toggleFastSwim = new MenuToggle("Fast Swim", "", PlayerFunctions.CanPlayerFastSwim);
+        toggleFastSwim.Changed += (sender, args) => PlayerFunctions.ToggleFastSwim();
+        playerMenuItems.Add(toggleFastSwim);
+
+        var toggleNoNoise = new MenuToggle("No Noise", "", PlayerFunctions.IsPlayerNoiseless);
+        toggleNoNoise.Changed += (sender, args) => PlayerFunctions.ToggleNoNoise();
+        playerMenuItems.Add(toggleNoNoise);
+
+        var toggleUnlimitedStamina = new MenuToggle("Unlimited Stamina", "", PlayerFunctions.HasPlayerUnlimitedStamina);
+        toggleUnlimitedStamina.Changed += (sender, args) => PlayerFunctions.ToggleUnlimitedStamina();
+        playerMenuItems.Add(toggleUnlimitedStamina);
+
+        var toggleUnlimitedBreath = new MenuToggle("Unlimited Breath", "", PlayerFunctions.HasPlayerUnlimitedBreath);
+        toggleUnlimitedBreath.Changed += (sender, args) => PlayerFunctions.ToggleUnlimitedBreath();
+        playerMenuItems.Add(toggleUnlimitedBreath);
+
+        var toggleUnlimitedAbility = new MenuToggle("Unlimited Special Ability", "", PlayerFunctions.HasPlayerUnlimitedAbility);
+        toggleUnlimitedAbility.Changed += (sender, args) => PlayerFunctions.ToggleUnlimitedAbility();
+        playerMenuItems.Add(toggleUnlimitedAbility);
+
         PlayerMenu = new GTA.Menu("Player Options", playerMenuItems.ToArray());
         DrawMenu(PlayerMenu);
     }
