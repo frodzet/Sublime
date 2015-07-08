@@ -14,10 +14,12 @@ class PlayerFunctions : Script
 {
     public static int WantedLevel { get { return Game.Player.WantedLevel; } set { Game.Player.WantedLevel = value; } }
     public static bool IsPlayerNeverWanted { get; set; }
-
+    public static bool IsPlayerInvincible { get; set; }
+ 
     public PlayerFunctions()
     {
         Tick += OnTick;
+        Game.Player.Character.IsInvincible = false;
     }
     private void OnTick(object sender, EventArgs e)
     {
@@ -26,6 +28,10 @@ class PlayerFunctions : Script
             WantedLevel = 0;
             ((MenuNumericScroller) Sublime.PlayerMenu.Items[4]).TimesIncremented = 0;
         }
+
+        if (IsPlayerInvincible)
+            Game.Player.Character.IsInvincible = true;
+
     }
 
     // Teleport Related
@@ -122,6 +128,20 @@ class PlayerFunctions : Script
         }
 
         Sublime.DisplayMessage("Never Wanted", IsPlayerNeverWanted);
+    }
+
+    internal static void ToggleInvincibility()
+    {
+        if (!IsPlayerInvincible)
+        {
+            IsPlayerInvincible = true;
+        }
+        else
+        {
+            IsPlayerInvincible = false;
+        }
+
+        Sublime.DisplayMessage("Invincibility", IsPlayerInvincible);
     }
 }
 

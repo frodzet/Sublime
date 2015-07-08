@@ -43,6 +43,10 @@ partial class Sublime
         toggleNeverWanted.Changed += (sender, args) => PlayerFunctions.ToggleNeverWanted();
         playerMenuItems.Add(toggleNeverWanted);
 
+        var toggleInvincible = new MenuToggle("Invincible", "", PlayerFunctions.IsPlayerInvincible);
+        toggleInvincible.Changed += (sender, args) => PlayerFunctions.ToggleInvincibility();
+        playerMenuItems.Add(toggleInvincible);
+
         PlayerMenu = new GTA.Menu("Player Options", playerMenuItems.ToArray());
         DrawMenu(PlayerMenu);
     }
