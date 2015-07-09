@@ -184,6 +184,7 @@ class PlayerFunctions : Script
     internal static void ToggleFastRun()
     {
         CanPlayerFastRun = !CanPlayerFastRun;
+
         if (CanPlayerFastRun)
             Function.Call(Hash._SET_MOVE_SPEED_MULTIPLIER, Game.Player, 1.49f);
         else
