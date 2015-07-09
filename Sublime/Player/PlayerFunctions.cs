@@ -159,116 +159,71 @@ class PlayerFunctions : Script
     }
     internal static void ToggleNeverWanted()
     {
-        if (!IsPlayerNeverWanted)
-        {
-            IsPlayerNeverWanted = true;
-        }
-        else
-        {
-            IsPlayerNeverWanted = false;
-        }
+        IsPlayerNeverWanted = !IsPlayerNeverWanted;
 
         Sublime.DisplayMessage("Never Wanted", IsPlayerNeverWanted);
     }
 
     internal static void ToggleInvincibility()
     {
-        if (!IsPlayerInvincible)
-        {
-            IsPlayerInvincible = true;
-        }
-        else
-        {
-            IsPlayerInvincible = false;
-            Game.Player.Character.IsInvincible = false;
-        }
+        IsPlayerInvincible = !IsPlayerInvincible;
 
+        if (!IsPlayerInvincible)
+            Game.Player.Character.IsInvincible = false;
+        
         Sublime.DisplayMessage("Invincibility", IsPlayerInvincible);
     }
 
     internal static void ToggleSuperJump()
     {
-        if (!CanPlayerSuperJump)
-        {
-            CanPlayerSuperJump = true;
-        }
-        else
-        {
-            CanPlayerSuperJump = false;
-        }
+        CanPlayerSuperJump = !CanPlayerSuperJump;
 
         Sublime.DisplayMessage("Super Jump", CanPlayerSuperJump);
     }
 
     internal static void ToggleFastRun()
     {
-        if (!CanPlayerFastRun)
-        {
-            CanPlayerFastRun = true;
+        CanPlayerFastRun = !CanPlayerFastRun;
+        if (CanPlayerFastRun)
             Function.Call(Hash._SET_MOVE_SPEED_MULTIPLIER, Game.Player, 1.49f);
-        }
         else
-        {
-            CanPlayerFastRun = false;
             Function.Call(Hash._SET_MOVE_SPEED_MULTIPLIER, Game.Player, 1.0f);
-        }
 
         Sublime.DisplayMessage("Fast Run", CanPlayerFastRun);
     }
 
     internal static void ToggleFastSwim()
     {
-        if (!CanPlayerFastSwim)
-        {
-            CanPlayerFastSwim = true;
+        CanPlayerFastSwim = !CanPlayerFastSwim;
+
+        if (CanPlayerFastSwim)
             Function.Call(Hash._SET_SWIM_SPEED_MULTIPLIER, Game.Player, 1.49f);
-        }
         else
-        {
-            CanPlayerFastSwim = false;
             Function.Call(Hash._SET_SWIM_SPEED_MULTIPLIER, Game.Player, 1.0f);
-        }
 
         Sublime.DisplayMessage("Fast Swim", CanPlayerFastSwim);
     }
 
     internal static void ToggleNoNoise()
     {
-        if (!IsPlayerNoiseless)
-        {
-            IsPlayerNoiseless = true;
-        }
-        else
-        {
-            IsPlayerNoiseless = false;
-        }
+        IsPlayerNoiseless = !IsPlayerNoiseless;
 
         Sublime.DisplayMessage("No Noise", IsPlayerNoiseless);
     }
 
     internal static void ToggleUnlimitedStamina()
     {
-        if (!HasPlayerUnlimitedStamina)
-        {
-            HasPlayerUnlimitedStamina = true;
-        }
-        else
-        {
-            HasPlayerUnlimitedStamina = false;
-        }
+        HasPlayerUnlimitedStamina = !HasPlayerUnlimitedStamina;
 
         Sublime.DisplayMessage("Unlimited Stamina", HasPlayerUnlimitedStamina);
     }
 
     internal static void ToggleUnlimitedBreath()
     {
-        if (!HasPlayerUnlimitedBreath)
+        HasPlayerUnlimitedBreath = !HasPlayerUnlimitedBreath;
+
+        if (HasPlayerUnlimitedBreath)
         {
-            HasPlayerUnlimitedBreath = true;
-        }
-        else
-        {
-            HasPlayerUnlimitedBreath = false;
             unsafe
             {
                 float originalBreathValue = BreathValue;
@@ -281,14 +236,7 @@ class PlayerFunctions : Script
 
     internal static void ToggleUnlimitedAbility()
     {
-        if (!HasPlayerUnlimitedAbility)
-        {
-            HasPlayerUnlimitedAbility = true;
-        }
-        else
-        {
-            HasPlayerUnlimitedAbility = false;
-        }
+        HasPlayerUnlimitedAbility = !HasPlayerUnlimitedAbility;
 
         Sublime.DisplayMessage("Unlimited Special Ability", HasPlayerUnlimitedAbility);
     }
