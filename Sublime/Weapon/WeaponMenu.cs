@@ -44,6 +44,12 @@ partial class Sublime
         {"COMPONENT_VINTAGEPISTOL_CLIP_02", "Extended Clip-Size"}, {"COMPONENT_GUSENBERG_CLIP_01", "Normal Clip-Size"}, {"COMPONENT_GUSENBERG_CLIP_02", "Extended Clip-Size"},
     };
 
+    Dictionary<string, int> weaponTintIndexDict = new Dictionary<string, int>()
+    {
+        {"Normal", 0}, {"Green", 1}, {"Gold", 2}, {"Pink", 3}, {"Army", 4}, {"LSPD", 5},
+        {"Orange", 6}, {"Platinum", 7}
+    };
+
     List<WeaponHash> weaponsNoComponentList = new List<WeaponHash>()
     {
         WeaponHash.Bat, WeaponHash.BZGas, WeaponHash.Crowbar, 
@@ -99,7 +105,7 @@ partial class Sublime
 
     private void SublimeWeaponComponentMenu(MenuButton buttonSender, WeaponHash weaponHash)
     {
-        List<MenuButton> componentButtons = new List<MenuButton>();
+        List<IMenuItem> componentButtons = new List<IMenuItem>();
 
         foreach (KeyValuePair<string, string> weaponComponent in weaponComponentItems)
         {
@@ -108,9 +114,16 @@ partial class Sublime
             if (canWeaponHaveComponent)
             {
                 var componentActivateButton = new MenuButton(weaponComponent.Value);
-                componentActivateButton.Activated += (sender, args) => WeaponFunctions.GiveWeaponComponent(weaponHash, weaponComponentHash);
+                componentActivateButton.Activated += (sender, args) => WeaponFunctions.ChangeWeaponComponent(weaponHash, weaponComponent);
                 componentButtons.Add(componentActivateButton);
             }
+        }
+
+        foreach (KeyValuePair<string, int> tintIndex in weaponTintIndexDict)
+        {
+            var tintActivateButton = new MenuButton(tintIndex.Key);
+            tintActivateButton.Activated += (sender, args) => WeaponFunctions.ChangeWeaponTint(weaponHash, tintIndex.Value);
+            componentButtons.Add(tintActivateButton);
         }
 
         WeaponComponentsMenu = new GTA.Menu(buttonSender.Caption, componentButtons.ToArray());

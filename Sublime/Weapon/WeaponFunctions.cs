@@ -34,6 +34,26 @@ class WeaponFunctions : Script
 
     }
 
+    // Weapon Component Related
+    internal static void ChangeWeaponComponent(WeaponHash weaponHash, KeyValuePair<string, string> weaponComponent)
+    {
+        int weaponComponentHash = Function.Call<int>(Hash.GET_HASH_KEY, weaponComponent.Key);
+        bool hasWeaponGotComponent = Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON_COMPONENT, Game.Player.Character, (int) weaponHash, weaponComponentHash);
+
+        if (!hasWeaponGotComponent)
+        {
+            Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Game.Player.Character, (int) weaponHash, weaponComponentHash);
+        }
+        else
+        {
+            Function.Call(Hash.REMOVE_WEAPON_COMPONENT_FROM_PED, Game.Player.Character, (int) weaponHash, weaponComponentHash);
+        }
+    }
+    internal static void ChangeWeaponTint(WeaponHash weaponHash, int tintIndex)
+    {
+        Function.Call(Hash.SET_PED_WEAPON_TINT_INDEX, Game.Player.Character, (int) weaponHash, tintIndex);
+    }
+
     internal static void GiveAllWeapons()
     {
         foreach (WeaponHash weaponHash in Enum.GetValues(typeof(WeaponHash)))
@@ -62,11 +82,5 @@ class WeaponFunctions : Script
 
         Sublime.DisplayMessage("Infinite Ammo", HasWeaponInfiniteAmmo);
     }
-
-    internal static void GiveWeaponComponent(WeaponHash weaponHash, int weaponComponentHash)
-    {
-        Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Game.Player.Character, (int) weaponHash, weaponComponentHash);
-    }
-
 }
 
