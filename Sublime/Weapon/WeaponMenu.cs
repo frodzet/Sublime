@@ -16,6 +16,7 @@ partial class Sublime
     public static ListMenu WeaponSelectionsMenu;
     public static GTA.Menu WeaponComponentsMenu;
 
+    #region Weapon Component Related Dictionaries and Lists
     Dictionary<string, string> weaponComponentItems = new Dictionary<string, string>()
     {
         {"SWAP_DEFAULT", "SWAP_DEFAULT"}, {"SWAP_MELEE_2H", "SWAP_MELEE_2H"}, {"RELOAD_DEFAULT", "RELOAD_DEFAULT"},
@@ -62,6 +63,7 @@ partial class Sublime
         WeaponHash.SmokeGrenade, WeaponHash.Snowball, WeaponHash.StickyBomb,
         WeaponHash.StunGun, WeaponHash.Unarmed
     };
+    #endregion
 
     private void SublimeWeaponMenu()
     {
@@ -75,9 +77,29 @@ partial class Sublime
         buttonGiveAllWeapons.Activated += (sender, args) => WeaponFunctions.GiveAllWeapons();
         weaponMenuItems.Add(buttonGiveAllWeapons);
 
-        var toggleInfiniteAmmo = new MenuToggle("Infinite Ammo", "", WeaponFunctions.HasWeaponInfiniteAmmo);
+        var toggleInfiniteAmmo = new MenuToggle("Infinite Ammunition", "", WeaponFunctions.HasWeaponInfiniteAmmo);
         toggleInfiniteAmmo.Changed += (sender, args) => WeaponFunctions.ToggleInfiniteAmmo();
         weaponMenuItems.Add(toggleInfiniteAmmo);
+
+        var toggleFireBullets = new MenuToggle("Fire Bullets", "", WeaponFunctions.HasWeaponFireBullets);
+        toggleFireBullets.Changed += (sender, args) => WeaponFunctions.ToggleFireBullets();
+        weaponMenuItems.Add(toggleFireBullets);
+
+        var toggleExplosiveBullets = new MenuToggle("Explosive Bullets", "", WeaponFunctions.HasWeaponExplosiveBullets);
+        toggleExplosiveBullets.Changed += (sender, args) => WeaponFunctions.ToggleExplosiveBullets();
+        weaponMenuItems.Add(toggleExplosiveBullets);
+
+        var toggleExplosiveMelee = new MenuToggle("Explosive Melee", "", WeaponFunctions.IsExplosiveMeleeEnabled);
+        toggleExplosiveMelee.Changed += (sender, args) => WeaponFunctions.ToggleExplosiveMelee();
+        weaponMenuItems.Add(toggleExplosiveMelee);
+
+        var toggleOneHitKill = new MenuToggle("One-Hit Kill", "", WeaponFunctions.IsOneHitKillEnabled);
+        toggleOneHitKill.Changed += (sender, args) => WeaponFunctions.ToggleOneHitKill();
+        weaponMenuItems.Add(toggleOneHitKill);
+
+        var toggleGravityGun = new MenuToggle("Gravity Gun", "", WeaponFunctions.IsGravityGunEnabled);
+        toggleGravityGun.Changed += (sender, args) => WeaponFunctions.ToggleGravityGun();
+        weaponMenuItems.Add(toggleGravityGun);
 
         WeaponMenu = new GTA.Menu("Weapon Options", weaponMenuItems.ToArray());
         DrawMenu(WeaponMenu);
@@ -102,7 +124,6 @@ partial class Sublime
         WeaponSelectionsMenu = new ListMenu("Weapon Components", weaponButtons.OrderBy(w => w.Caption).ToArray(), 20);
         DrawMenu(WeaponSelectionsMenu);
     }
-
     private void SublimeWeaponComponentMenu(MenuButton buttonSender, WeaponHash weaponHash)
     {
         List<IMenuItem> componentButtons = new List<IMenuItem>();
