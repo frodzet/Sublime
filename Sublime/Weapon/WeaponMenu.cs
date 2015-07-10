@@ -57,12 +57,6 @@ partial class Sublime
         WeaponHash.StunGun, WeaponHash.Unarmed
     };
 
-
-    private void FillWeaponComponents()
-    {
-
-    }
-
     private void SublimeWeaponMenu()
     {
         List<IMenuItem> weaponMenuItems = new List<IMenuItem>();

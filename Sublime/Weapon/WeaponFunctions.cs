@@ -13,7 +13,6 @@ using System.Windows.Forms;
 class WeaponFunctions : Script
 {
     public static bool HasWeaponInfiniteAmmo { get; set; }
-    public static bool HasWeaponLaserSight { get; set; }
 
     public WeaponFunctions()
     {
@@ -23,7 +22,15 @@ class WeaponFunctions : Script
     private void OnTick(object sender, EventArgs e)
     {
         if (HasWeaponInfiniteAmmo)
-            Game.Player.Character.Weapons.Current.InfiniteAmmoClip = true;
+        {
+            Weapon playerWeapon = Game.Player.Character.Weapons.Current;
+
+            playerWeapon.InfiniteAmmoClip = true;
+            if (playerWeapon.AmmoInClip != playerWeapon.MaxAmmoInClip)
+            {
+                playerWeapon.AmmoInClip = playerWeapon.MaxAmmoInClip;
+            }
+        }
 
     }
 
