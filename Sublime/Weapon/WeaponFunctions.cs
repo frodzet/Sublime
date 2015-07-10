@@ -13,7 +13,7 @@ using System.Windows.Forms;
 class WeaponFunctions : Script
 {
     public static bool HasWeaponInfiniteAmmo { get; set; }
-    public static bool IsWeaponRapidFireEnabled { get; set; }
+    public static bool HasWeaponLaserSight { get; set; }
 
     public WeaponFunctions()
     {
@@ -24,7 +24,6 @@ class WeaponFunctions : Script
     {
         if (HasWeaponInfiniteAmmo)
             Game.Player.Character.Weapons.Current.InfiniteAmmoClip = true;
-
 
     }
 
@@ -57,6 +56,10 @@ class WeaponFunctions : Script
         Sublime.DisplayMessage("Infinite Ammo", HasWeaponInfiniteAmmo);
     }
 
+    internal static void GiveWeaponComponent(WeaponHash weaponHash, int weaponComponentHash)
+    {
+        Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Game.Player.Character, (int) weaponHash, weaponComponentHash);
+    }
 
 }
 

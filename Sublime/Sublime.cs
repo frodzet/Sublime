@@ -28,6 +28,7 @@ partial class Sublime : Script
     public Sublime()
     {
         KeyUp += OnKeyUp;
+        FillWeaponComponents();
     }
     private void OnKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
     {
