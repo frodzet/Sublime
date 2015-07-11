@@ -85,7 +85,7 @@ class VehicleFunctions : Script
 
         if (CanVehiclesJump)
         {
-            if (Game.IsKeyPressed(Keys.B) && !Game.Player.Character.CurrentVehicle.IsOnAllWheels)
+            if (Game.IsKeyPressed(Keys.B) && Game.Player.Character.CurrentVehicle.IsOnAllWheels)
             {
                 Game.Player.Character.CurrentVehicle.ApplyForceRelative(Game.Player.Character.CurrentVehicle.UpVector * 5.0f);
             }
