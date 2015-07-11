@@ -77,7 +77,7 @@ class VehicleFunctions : Script
             {
                 Game.Player.Character.CurrentVehicle.Speed += 0.5f;
             }
-            if (Game.IsKeyPressed(Keys.NumPad0))
+            if (Game.IsKeyPressed(Keys.NumPad3))
             {
                 Game.Player.Character.CurrentVehicle.Speed = 0.0f;
             }
@@ -85,9 +85,12 @@ class VehicleFunctions : Script
 
         if (CanVehiclesJump)
         {
-            if (Game.IsKeyPressed(Keys.B) && Game.Player.Character.CurrentVehicle.IsOnAllWheels)
+            if (Game.IsKeyPressed(Keys.B))
             {
-                Game.Player.Character.CurrentVehicle.ApplyForceRelative(Game.Player.Character.CurrentVehicle.UpVector * 5.0f);
+                if (Game.Player.Character.CurrentVehicle.IsOnAllWheels)
+                {
+                    Game.Player.Character.CurrentVehicle.ApplyForceRelative(Game.Player.Character.CurrentVehicle.UpVector * 12.5f);
+                }
             }
         }
 
