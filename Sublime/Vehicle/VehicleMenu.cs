@@ -49,7 +49,8 @@ partial class Sublime
         toggleVehicleJump.Changed += (sender, args) => VehicleFunctions.ToggleVehiclesCanJump();
         vehicleMenuItems.Add(toggleVehicleJump);
 
-        var enumVehicleWeaponAssets = new MenuEnumScroller("Vehicle Weapon", "", VehicleFunctions.VehicleWeaponAssetsDict.Keys.ToArray());
+        var enumVehicleWeaponAssets = new MenuEnumScroller("Vehicle Weapon", "", VehicleFunctions.VehicleWeaponAssetsDict.Keys.ToArray(), VehicleFunctions.VehicleWeaponAssetIndex);
+        enumVehicleWeaponAssets.Changed += (sender, args) => VehicleFunctions.VehicleWeaponAssetIndex = enumVehicleWeaponAssets.Index;
         vehicleMenuItems.Add(enumVehicleWeaponAssets);
 
         var toggleVehicleWeapons = new MenuToggle("Vehicle Weapons", "", VehicleFunctions.IsVehicleWeaponsEnabled);

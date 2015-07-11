@@ -21,6 +21,7 @@ class VehicleFunctions : Script
     public static bool IsNeverFallOffBikeEnabled { get; set; }
     public static bool CanVehiclesJump { get; set; }
     public static bool IsVehicleWeaponsEnabled { get; set; }
+    public static int VehicleWeaponAssetIndex { get; set; }
 
     public static Dictionary<string, string> VehicleWeaponAssetsDict = new Dictionary<string, string>()
     {
