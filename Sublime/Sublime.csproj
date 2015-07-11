@@ -52,6 +52,8 @@
     <Compile Include="Player\PlayerMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sublime.cs" />
+    <Compile Include="Vehicle\VehicleFunctions.cs" />
+    <Compile Include="Vehicle\VehicleMenu.cs" />
     <Compile Include="Weapon\WeaponFunctions.cs" />
     <Compile Include="Weapon\WeaponMenu.cs" />
   </ItemGroup>

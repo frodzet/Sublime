@@ -26,6 +26,10 @@ partial class Sublime
         buttonWeapon.Activated += (sender, args) => SublimeWeaponMenu();
         mainMenuItems.Add(buttonWeapon);
 
+        var buttonVehicle = new MenuButton("Vehicle");
+        buttonVehicle.Activated += (sender, args) => SublimeVehicleMenu();
+        mainMenuItems.Add(buttonVehicle);
+
         MainMenu = new GTA.Menu("Sublime Mod", mainMenuItems.ToArray());
         DrawMenu(MainMenu);
     }
