@@ -85,11 +85,12 @@ partial class Sublime
         {
             var buttonVehicleCategoryMenu = new MenuButton(vehicleType.Key);
 
-            // Add vehicles to each menu.
+            // Add vehicle categories
             buttonVehicleCategoryMenu.Activated += (sender, args) =>
             {
                 List<IMenuItem> vehicleSpawnerVehicleItems = new List<IMenuItem>();
 
+                // Add vehicles to each category
                 foreach (VehicleHash vehicle in Enum.GetValues(typeof(VehicleHash)))
                 {
                     int vehicleClass = Function.Call<int>((Hash) 0xDEDF1C8BD47C2200, (int) vehicle);
