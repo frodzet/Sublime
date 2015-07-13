@@ -22,6 +22,7 @@ class VehicleFunctions : Script
     public static bool CanVehiclesJump { get; set; }
     public static bool IsVehicleWeaponsEnabled { get; set; }
     public static int VehicleWeaponAssetIndex { get; set; }
+    public static bool IsWarpInSpawnedVehicleEnabled { get; set; }
 
     public static Dictionary<string, string> VehicleWeaponAssetsDict = new Dictionary<string, string>()
     {
@@ -29,7 +30,7 @@ class VehicleFunctions : Script
     };
     public static string GetVehicleWeaponAsset()
     {
-        string weaponAsset = ((MenuEnumScroller) Sublime.VehicleMenu.Items[8]).Value;
+        string weaponAsset = ((MenuEnumScroller) Sublime.VehicleMenu.Items[9]).Value;
         foreach (KeyValuePair<string, string> weapon in VehicleWeaponAssetsDict)
         {
             if (weapon.Key == weaponAsset)
@@ -100,6 +101,7 @@ class VehicleFunctions : Script
             {
                 Vehicle vehicle = Game.Player.Character.CurrentVehicle;
 
+                // Request and load weapon asset.
                 GTA.Model weaponAsset = Function.Call<int>(Hash.GET_HASH_KEY, GetVehicleWeaponAsset());
                 if (!Function.Call<bool>(Hash.HAS_WEAPON_ASSET_LOADED, weaponAsset))
                 {
@@ -129,6 +131,26 @@ class VehicleFunctions : Script
 
     }
 
+    // Vehicle spawner related
+    internal static void SpawnVehicle(VehicleHash vehicle)
+    {
+        Vehicle spawnedVehicle = World.CreateVehicle(vehicle, Game.Player.Character.Position + (Game.Player.Character.ForwardVector * 6.5f), Game.Player.Character.Heading + 90.0f);
+        spawnedVehicle.PlaceOnGround();
+        spawnedVehicle.EngineRunning = true;
+        if (spawnedVehicle.Exists() && IsWarpInSpawnedVehicleEnabled)
+        {
+            spawnedVehicle.Heading = Game.Player.Character.Heading;
+            Game.Player.Character.SetIntoVehicle(spawnedVehicle, VehicleSeat.Driver);
+        }
+        spawnedVehicle.MarkAsNoLongerNeeded();
+    }
+    internal static void ToggleWarpInSpawnedVehicle()
+    {
+        IsWarpInSpawnedVehicleEnabled = !IsWarpInSpawnedVehicleEnabled;
+
+        Sublime.DisplayMessage("Warp in Spawned Vehicle", IsWarpInSpawnedVehicleEnabled);
+    }
+
     internal static void FixVehicle()
     {
         Game.Player.Character.CurrentVehicle.Repair();
@@ -142,9 +164,7 @@ class VehicleFunctions : Script
         IsVehicleIndestructible = !IsVehicleIndestructible;
 
         if (!IsVehicleIndestructible)
-        {
             SetVehicleIndestructible(false);
-        }
 
         Sublime.DisplayMessage("Vehicle Indestructible", IsVehicleIndestructible);
     }
@@ -195,7 +215,7 @@ class VehicleFunctions : Script
         Sublime.DisplayMessage("Seat Belt", IsSeatBeltEnabled);
     }
 
-    internal static void ToggleLockedDoors()
+    internal static void ToggleLockDoors()
     {
         IsLockedDoorsEnabled = !IsLockedDoorsEnabled;
 
@@ -222,7 +242,7 @@ class VehicleFunctions : Script
         Sublime.DisplayMessage("Speed Boost", IsSpeedBoostEnabled);
     }
 
-    internal static void ToggleVehiclesCanJump()
+    internal static void ToggleVehicleJump()
     {
         CanVehiclesJump = !CanVehiclesJump;
 

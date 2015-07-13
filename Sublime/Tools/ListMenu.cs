@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
+// credits goes to IncoCode.
 public class ListMenu : GTA.Menu
 {
     public readonly List<IMenuItem> _allItems;
@@ -76,13 +77,13 @@ public class ListMenu : GTA.Menu
         this.Items = this._allItems.Skip(this._currentShift).Take(this._itemsPerPage).ToList();
         if (showPrevBtn)
         {
-            var prevBtn = new MenuButton("PrevPage") { Parent = this };
+            var prevBtn = new MenuButton("Previous Page") { Parent = this };
             prevBtn.Activated += (sender, args) => this.PrevPage();
             this.Items.Add(prevBtn);
         }
         if (showNextBtn)
         {
-            var nextBtn = new MenuButton("NextPage") { Parent = this };
+            var nextBtn = new MenuButton("Next Page") { Parent = this };
             nextBtn.Activated += (sender, args) => this.NextPage();
             this.Items.Add(nextBtn);
         }

@@ -13,13 +13,19 @@ using System.Windows.Forms;
 partial class Sublime
 {
     public static GTA.Menu VehicleMenu;
+    public static GTA.Menu VehicleSpawnerCategoriesMenu;
 
     private void SublimeVehicleMenu()
     {
         List<IMenuItem> vehicleMenuItems = new List<IMenuItem>();
 
-        var buttonSpawnVehicleMenu = new MenuButton("Vehicle Spawner Menu");
-        vehicleMenuItems.Add(buttonSpawnVehicleMenu);
+        var buttonVehicleSpawnerMenu = new MenuButton("Vehicle Spawner Menu");
+        buttonVehicleSpawnerMenu.Activated += (sender, args) => SublimeVehicleSpawnerMenu();
+        vehicleMenuItems.Add(buttonVehicleSpawnerMenu);
+
+        var toggleWarpInSpawned = new MenuToggle("Warp in Spawned Vehicle", "", VehicleFunctions.IsWarpInSpawnedVehicleEnabled);
+        toggleWarpInSpawned.Changed += (sender, args) => VehicleFunctions.ToggleWarpInSpawnedVehicle();
+        vehicleMenuItems.Add(toggleWarpInSpawned);
 
         var buttonFixVehicle = new MenuButton("Fix Vehicle");
         buttonFixVehicle.Activated += (sender, args) => VehicleFunctions.FixVehicle();
@@ -34,7 +40,7 @@ partial class Sublime
         vehicleMenuItems.Add(toggleSeatBelt);
 
         var toggleLockDoors = new MenuToggle("Lock Doors", "", VehicleFunctions.IsLockedDoorsEnabled);
-        toggleLockDoors.Changed += (sender, args) => VehicleFunctions.ToggleLockedDoors();
+        toggleLockDoors.Changed += (sender, args) => VehicleFunctions.ToggleLockDoors();
         vehicleMenuItems.Add(toggleLockDoors);
 
         var toggleNeverFallOffBike = new MenuToggle("Never Fall-Off Bike", "", VehicleFunctions.IsNeverFallOffBikeEnabled);
@@ -46,7 +52,7 @@ partial class Sublime
         vehicleMenuItems.Add(toggleSpeedBoost);
 
         var toggleVehicleJump = new MenuToggle("Vehicle Jump", "", VehicleFunctions.CanVehiclesJump);
-        toggleVehicleJump.Changed += (sender, args) => VehicleFunctions.ToggleVehiclesCanJump();
+        toggleVehicleJump.Changed += (sender, args) => VehicleFunctions.ToggleVehicleJump();
         vehicleMenuItems.Add(toggleVehicleJump);
 
         var enumVehicleWeaponAssets = new MenuEnumScroller("Vehicle Weapon", "", VehicleFunctions.VehicleWeaponAssetsDict.Keys.ToArray(), VehicleFunctions.VehicleWeaponAssetIndex);
@@ -59,5 +65,51 @@ partial class Sublime
 
         VehicleMenu = new GTA.Menu("Vehicle Options", vehicleMenuItems.ToArray());
         DrawMenu(VehicleMenu);
+    }
+
+    private void SublimeVehicleSpawnerMenu()
+    {
+        List<IMenuItem> vehicleSpawnerMenuItems = new List<IMenuItem>();
+
+        Dictionary<string, int> vehicleCategoriesDict = new Dictionary<string, int>()
+        {
+            {"Compacts", 0}, {"Sedans", 1}, {"SUVs", 2}, {"Coupes", 3}, {"Muscle", 4},
+            {"Sports Classic", 5}, {"Sports", 6}, {"Super", 7}, {"Motorcycle", 8},
+            {"Off-Road", 9}, {"Industrial", 10}, {"Utility", 11}, {"Vans/Pickups", 12},
+            {"Bicycles", 13}, {"Boats", 14}, {"Helicopters", 15}, {"Airplanes", 16},
+            {"Service", 17}, {"Emergency", 18}, {"Military", 19}, {"Commercial", 20},
+            {"Trains/Containers", 21}
+        };
+
+        foreach (KeyValuePair<string, int> vehicleType in vehicleCategoriesDict)
+        {
+            var buttonVehicleCategoryMenu = new MenuButton(vehicleType.Key);
+
+            // Add vehicles to each menu.
+            buttonVehicleCategoryMenu.Activated += (sender, args) =>
+            {
+                List<IMenuItem> vehicleSpawnerVehicleItems = new List<IMenuItem>();
+
+                foreach (VehicleHash vehicle in Enum.GetValues(typeof(VehicleHash)))
+                {
+                    int vehicleClass = Function.Call<int>((Hash) 0xDEDF1C8BD47C2200, (int) vehicle);
+
+                    if (vehicleClass == vehicleType.Value)
+                    {
+                        var buttonSpawnVehicle = new MenuButton(vehicle.ToString());
+                        buttonSpawnVehicle.Activated += (subSender, subArgs) => VehicleFunctions.SpawnVehicle(vehicle);
+                        vehicleSpawnerVehicleItems.Add(buttonSpawnVehicle);
+                    }
+                }
+
+                ListMenu VehicleSpawnerVehiclesMenu = new ListMenu(vehicleType.Key, vehicleSpawnerVehicleItems.OrderBy(v => v.Caption).ToArray(), 20);
+                DrawMenu(VehicleSpawnerVehiclesMenu);
+            };
+
+            vehicleSpawnerMenuItems.Add(buttonVehicleCategoryMenu);
+        }
+
+        VehicleSpawnerCategoriesMenu = new GTA.Menu("Vehicle Spawner", vehicleSpawnerMenuItems.ToArray());
+        DrawMenu(VehicleSpawnerCategoriesMenu);
     }
 }
