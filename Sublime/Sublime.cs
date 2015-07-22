@@ -29,6 +29,7 @@ partial class Sublime : Script
     {
         KeyUp += OnKeyUp;
     }
+
     private void OnKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
     {
         if (e.KeyCode == Keys.F9)
@@ -91,13 +92,40 @@ partial class Sublime : Script
         View.AddMenu(name);
     }
 
+    private void DrawMenu(GTA.Menu name, bool hasFooter)
+    {
+        // Header Layout
+        name.HeaderHeight += 2;
+        name.HeaderFont = GTA.Font.Pricedown;
+        name.HeaderColor = System.Drawing.Color.FromArgb(233, 0, 16, 99);
+
+        // Items Layout
+        name.ItemTextCentered = false;
+        name.ItemHeight -= 7;
+        name.ItemTextScale = 0.32f;
+        name.SelectedItemColor = System.Drawing.Color.FromArgb(112, 0, 16, 115);
+        name.UnselectedItemColor = System.Drawing.Color.FromArgb(112, 0, 16, 0);
+        name.SelectedTextColor = System.Drawing.Color.White;
+        name.UnselectedTextColor = System.Drawing.Color.AntiqueWhite;
+
+        // Footer Layout
+        name.HasFooter = hasFooter;
+        name.FooterHeight -= 32;
+        name.FooterFont = GTA.Font.Pricedown;
+        name.FooterColor = System.Drawing.Color.FromArgb(233, 0, 16, 99);
+        name.FooterTextColor = System.Drawing.Color.White;
+
+        View.MenuPosition = new System.Drawing.Point(5, 5);
+        View.AddMenu(name);
+    }
+
     public static void DisplayMessage(string msg, bool state)
     {
         string stateMsg;
         if (state)
-            stateMsg = " Activated";
+            stateMsg = " ~g~Activated";
         else
-            stateMsg = " Deactivated";
+            stateMsg = " ~r~Deactivated";
 
         UI.Notify(msg + ":" + stateMsg);
     }

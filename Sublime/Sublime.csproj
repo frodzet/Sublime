@@ -54,6 +54,7 @@
     <Compile Include="Sublime.cs" />
     <Compile Include="Vehicle\VehicleFunctions.cs" />
     <Compile Include="Vehicle\VehicleMenu.cs" />
+    <Compile Include="Vehicle\VehicleModMenu.cs" />
     <Compile Include="Weapon\WeaponFunctions.cs" />
     <Compile Include="Weapon\WeaponMenu.cs" />
   </ItemGroup>

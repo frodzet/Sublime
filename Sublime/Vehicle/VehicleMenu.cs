@@ -23,6 +23,10 @@ partial class Sublime
         buttonVehicleSpawnerMenu.Activated += (sender, args) => SublimeVehicleSpawnerMenu();
         vehicleMenuItems.Add(buttonVehicleSpawnerMenu);
 
+        var buttonVehicleModKitMenu = new MenuButton("Vehicle Mod Menu");
+        buttonVehicleModKitMenu.Activated += (sender, args) => SublimeVehicleModCategoriesMenu();
+        vehicleMenuItems.Add(buttonVehicleModKitMenu);
+
         var toggleWarpInSpawned = new MenuToggle("Warp in Spawned Vehicle", "", VehicleFunctions.IsWarpInSpawnedVehicleEnabled);
         toggleWarpInSpawned.Changed += (sender, args) => VehicleFunctions.ToggleWarpInSpawnedVehicle();
         vehicleMenuItems.Add(toggleWarpInSpawned);
@@ -94,17 +98,19 @@ partial class Sublime
                 foreach (VehicleHash vehicle in Enum.GetValues(typeof(VehicleHash)))
                 {
                     int vehicleClass = Function.Call<int>((Hash) 0xDEDF1C8BD47C2200, (int) vehicle);
+                    string getDisplayModel = Function.Call<string>(Hash.GET_DISPLAY_NAME_FROM_VEHICLE_MODEL, (int) vehicle);
+                    string convertDisplayModelToName = Function.Call<string>(Hash._GET_LABEL_TEXT, getDisplayModel);
 
-                    if (vehicleClass == vehicleType.Value)
+                    if (vehicleClass == vehicleType.Value && convertDisplayModelToName != null)
                     {
-                        var buttonSpawnVehicle = new MenuButton(vehicle.ToString());
+                        var buttonSpawnVehicle = new MenuButton(convertDisplayModelToName);
                         buttonSpawnVehicle.Activated += (subSender, subArgs) => VehicleFunctions.SpawnVehicle(vehicle);
                         vehicleSpawnerVehicleItems.Add(buttonSpawnVehicle);
                     }
                 }
 
-                ListMenu VehicleSpawnerVehiclesMenu = new ListMenu(vehicleType.Key, vehicleSpawnerVehicleItems.OrderBy(v => v.Caption).ToArray(), 20);
-                DrawMenu(VehicleSpawnerVehiclesMenu);
+                ListMenu vehicleSpawnerVehiclesMenu = new ListMenu(vehicleType.Key, vehicleSpawnerVehicleItems.OrderBy(v => v.Caption).ToArray(), 20);
+                DrawMenu(vehicleSpawnerVehiclesMenu);
             };
 
             vehicleSpawnerMenuItems.Add(buttonVehicleCategoryMenu);

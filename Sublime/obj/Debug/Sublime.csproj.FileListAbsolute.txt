@@ -1,0 +1,6 @@
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\bin\Debug\Sublime.dll
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\bin\Debug\Sublime.pdb
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\bin\Debug\ScriptHookVDotNet.dll
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\obj\Debug\Sublime.csprojResolveAssemblyReference.cache
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\obj\Debug\Sublime.dll
+C:\Users\Simon Birkedal\Documents\GitHub\Sublime\Sublime\obj\Debug\Sublime.pdb

@@ -23,6 +23,7 @@ class VehicleFunctions : Script
     public static bool IsVehicleWeaponsEnabled { get; set; }
     public static int VehicleWeaponAssetIndex { get; set; }
     public static bool IsWarpInSpawnedVehicleEnabled { get; set; }
+    public static bool IsVehicleAlwaysOnGroundEnabled { get; set; }
 
     public static Dictionary<string, string> VehicleWeaponAssetsDict = new Dictionary<string, string>()
     {
@@ -30,7 +31,7 @@ class VehicleFunctions : Script
     };
     public static string GetVehicleWeaponAsset()
     {
-        string weaponAsset = ((MenuEnumScroller) Sublime.VehicleMenu.Items[9]).Value;
+        string weaponAsset = ((MenuEnumScroller) Sublime.VehicleMenu.Items[10]).Value;
         foreach (KeyValuePair<string, string> weapon in VehicleWeaponAssetsDict)
         {
             if (weapon.Key == weaponAsset)
@@ -255,5 +256,6 @@ class VehicleFunctions : Script
 
         Sublime.DisplayMessage("Vehicle Weapons", IsVehicleWeaponsEnabled);
     }
+
 }
 

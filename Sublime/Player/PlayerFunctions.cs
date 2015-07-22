@@ -126,6 +126,10 @@ class PlayerFunctions : Script
         Function.Call(Hash._RECHARGE_SPECIAL_ABILITY, Game.Player, true);
         Function.Call(Hash.RESET_PLAYER_STAMINA, Game.Player);
 
+        Ped[] nearbyDeadPeds = World.GetNearbyPeds(Game.Player.Character, 100.0f).Where(p => p.IsDead).ToArray();
+        UI.Notify(nearbyDeadPeds.Count().ToString());
+        
+
         Sublime.DisplayMessage("Player health, armor, stamina and special ability restored");
     }
 
